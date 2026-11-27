@@ -26,14 +26,21 @@ scripts/                  校验脚本（Python 3.9+，仅标准库）
 git clone https://github.com/qixin-portfolio/seedance-directing-team-cn.git ~/.claude/skills/seedance-directing-team-cn
 ```
 
+## 附带模块
+
+`modules/` 下附带两个模块，正式项目的必过关卡直接使用，无需另装：
+
+| 模块 | 作用 |
+|---|---|
+| `modules/commercial-dp-planning` | 商业片摄影设计单（机位、器材、焦段、光线状态） |
+| `modules/acting-system` | 人物表演母版、场景行为、眼神与声音档案 |
+
 ## 可选依赖
 
 以下外部 Skill 不随本仓库分发；装了会增强对应环节，没装会自动回退到本 Skill 自带的参考，功能完整可用：
 
 | 模块 | 作用 | 没装时 |
 |---|---|---|
-| `commercial-dp-planning` | 摄影设计单 | 用内置摄影指导 + 摄影机与镜头选型 |
-| `acting-system` | 人物表演与声音档案 | 用内置表演指导 |
 | `lira-image-prompts` | 视觉资产提示词 | 用内置资产生产系统 |
 | `cinedance-v4` | 镜头控制区块 | 用内置输入设计与物理动作设计 |
 | `cinematic-director`（参考库） | 导演风格、广告类型参考 | 跳过 |

@@ -1,0 +1,6 @@
+interface:
+  display_name: "ACTING System"
+  short_description: "为AI视频建立人物表演母版、场景行为、眼神反应与固定声音"
+  default_prompt: "Use $acting-system to build observable, filmable character performance for this scene."
+policy:
+  allow_implicit_invocation: true

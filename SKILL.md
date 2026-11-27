@@ -1,7 +1,7 @@
 ---
 name: seedance-directing-team-cn
 metadata:
-  version: "1.6.1"
+  version: "1.7.0"
   updated_at: "2026-11-27"
 description: "中文 AI 影视导演组 × Seedance 2.0/2.5 执行一体化 Skill。上层是六角色导演组（总导演、表演指导、镜内执行导演、摄影指导、提示词导演、场记），负责场次命题、表演谱、镜内生态与群演、物理动作因果、摄影设计与器材选型、Blender 摄影预演和连续性；下层是 Seedance 执行层，负责版本/平台路由、输入设计与 Reference Role、素材职责、画内文字、视觉锚点/首尾帧/关键帧/白模、编辑与延长、参考视频反推、镜头配方、Compact / 15-Block / 多镜头 / 锚点段落式提示词、生成前审计、控制变量实验、候选 Selects、单区块返修和 APPROVED 锁定。用户在做 AI 短片、剧集、广告或长片的拆场、资产、分镜、Seedance 提示词、审片返修、连续性台账或经验沉淀时使用；也适用于即梦、Higgsfield、API 等 Seedance 平台。不处理现实制片的人员、排期和交付管理。"
 ---
@@ -24,15 +24,16 @@ description: "中文 AI 影视导演组 × Seedance 2.0/2.5 执行一体化 Skil
 
 只要是正式项目（客户片、成片、要交付的多镜头分镜），且画面里有人物在表演或说话，写任何一条视频提示词之前必须先产出下面两样，并落成项目文件；档位只决定审稿深度，不决定能否跳过这两关。两关的**产出**是必须的；外部模块只是增强，没装就用本 Skill 自带的参考完成（见下方“外部模块查找与缺失回退”）：
 
-1. **摄影设计**：如已安装 DP Skill `commercial-dp-planning`，先用它出摄影设计单；未安装则直接用本 Skill 的摄影参考出摄影设计单。再用 [摄影指导](references/director/cinematography-direction.md) 和 [摄影机与镜头选型](references/director/camera-and-lens-system.md) 落到逐镜：每个机位写器材、实有焦段和 T 档。
-2. **人物表演**：用 [表演指导](references/director/performance-direction.md) （如已安装专业模块 `acting-system`，同时读它的 `SKILL.md` 和 `references/full-reference.md`；未安装则只用表演指导），为每个有戏的主要人物建表演档案（目标、阻力、策略、招牌动作及触发、面具与裂缝、眼神），说话的人另建声音档案。提示词里每组写“⚠️<人物>表演（本组）”一段（按场景改写，不照抄档案）；有台词的组在对白规则里逐字贴“<人物>声音”。
+1. **摄影设计**：先用随本 Skill 附带的 DP 模块 [`commercial-dp-planning`](modules/commercial-dp-planning/SKILL.md) 出摄影设计单，再用 [摄影指导](references/director/cinematography-direction.md) 和 [摄影机与镜头选型](references/director/camera-and-lens-system.md) 落到逐镜：每个机位写器材、实有焦段和 T 档。
+2. **人物表演**：用 [表演指导](references/director/performance-direction.md) 加随本 Skill 附带的专业模块 [`acting-system`](modules/acting-system/SKILL.md)（读它的 `SKILL.md` 和 [`references/full-reference.md`](modules/acting-system/references/full-reference.md)），为每个有戏的主要人物建表演档案（目标、阻力、策略、招牌动作及触发、面具与裂缝、眼神），说话的人另建声音档案。提示词里每组写“⚠️<人物>表演（本组）”一段（按场景改写，不照抄档案）；有台词的组在对白规则里逐字贴“<人物>声音”。
 
 交付提示词时，用一行列出本次实际读过的导演层文件和专业模块。缺哪一关就先补哪一关，不用“格式校验通过”代替。成稿用 `python3 scripts/validate_prompt_text.py --production <文件>`（锚点段落式用 `scripts/validate_anchor_prompt.py --production`）校验：它会检查表演段、声音档案和每个机位的焦段与 T 档。
 
 #### 外部模块查找与缺失回退
 
-本 Skill 提到的外部模块（`commercial-dp-planning`、`acting-system`、`lira-image-prompts`、`cinedance-v4`、参考库 `cinematic-director`）都**不随本 Skill 分发**。用之前按顺序找，找到第一个就用：
+`commercial-dp-planning` 和 `acting-system` **随本 Skill 附带**，在 `modules/` 下，正式项目必过关卡直接用它们。其余外部模块（`lira-image-prompts`、`cinedance-v4`、参考库 `cinematic-director`）**不随本 Skill 分发**。用之前按顺序找，找到第一个就用：
 
+0. 本 Skill 的 `modules/<模块名>/`
 1. 当前环境的 Skill 列表（可直接调用的同名 Skill）
 2. `~/.claude/skills/<模块名>/`
 3. `~/.agents/skills/<模块名>/`（参考库：`~/.agents/skill-libs/<名>/`）
@@ -42,8 +43,8 @@ description: "中文 AI 影视导演组 × Seedance 2.0/2.5 执行一体化 Skil
 
 | 缺的模块 | 回退到 |
 |---|---|
-| `commercial-dp-planning` | [摄影指导](references/director/cinematography-direction.md) + [摄影机与镜头选型](references/director/camera-and-lens-system.md) + [光学与 FOV](references/seedance/optics-fov.md)，照样出摄影设计单 |
-| `acting-system` | [表演指导](references/director/performance-direction.md)，照样建表演档案和声音档案 |
+| `commercial-dp-planning`（仅当 `modules/` 被删除时） | [摄影指导](references/director/cinematography-direction.md) + [摄影机与镜头选型](references/director/camera-and-lens-system.md) + [光学与 FOV](references/seedance/optics-fov.md)，照样出摄影设计单 |
+| `acting-system`（仅当 `modules/` 被删除时） | [表演指导](references/director/performance-direction.md)，照样建表演档案和声音档案 |
 | `lira-image-prompts` | [资产生产系统](references/seedance/asset-production-system.md) + [人物设定板模板](references/seedance/character-sheet-template.md) |
 | `cinedance-v4` | [输入设计与预演](references/seedance/input-design-and-previs.md) + [物理动作设计](references/director/physical-action-design.md) |
 | `cinematic-director` | 跳过该参考库，只用本 Skill 内的规则 |
@@ -93,7 +94,7 @@ description: "中文 AI 影视导演组 × Seedance 2.0/2.5 执行一体化 Skil
 | 表演谱、表演任务主线、活人感、微表情时间轴、角色表演档案 | [表演指导](references/director/performance-direction.md) |
 | 镜内生态、群演/背景人物、同步反应、穿行遮挡 | [镜内生态](references/director/in-frame-ecology.md) |
 | 跳跃、坠落、拉扯、攀爬、撞击、材料失效、因果 Insert | [物理动作与因果 Coverage](references/director/physical-action-design.md) |
-| 观看关系、构图、机位、运动触发、光线、DP 载荷 | 已安装 `commercial-dp-planning` 时先用它出摄影设计单，再用 [摄影指导](references/director/cinematography-direction.md) + [光学与 FOV](references/seedance/optics-fov.md) |
+| 观看关系、构图、机位、运动触发、光线、DP 载荷 | 先用 [`commercial-dp-planning`](modules/commercial-dp-planning/SKILL.md) 出摄影设计单，再用 [摄影指导](references/director/cinematography-direction.md) + [光学与 FOV](references/seedance/optics-fov.md) |
 | 摄影机/镜头选型、焦距光圈、器材组合预设 | [摄影机与镜头选型](references/director/camera-and-lens-system.md) |
 | Blender 白模、相机轨迹、复合运镜、预演交接与验收 | [Blender 摄影预演](references/director/blender-camera-previs.md) |
 | 把定案编译成 Seedance 提示词 | [提示词导演](references/director/prompt-director.md) + [生成控制](references/director/generation-control.md) |

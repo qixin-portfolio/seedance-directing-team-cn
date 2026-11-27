@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.7.0 — 2026-11-27 · 附带摄影与表演模块
+
+- 新增 `modules/commercial-dp-planning`（摄影设计单）和 `modules/acting-system`（表演与声音档案），安装本 Skill 即可完整跑正式项目的两道必过关卡。
+- 模块查找顺序最前加入本 Skill 的 `modules/`；其余外部模块仍为可选，缺失时回退内置参考。
+
 ## v1.6.1 — 2026-11-27 · 外部模块改为可选，缺失时回退到内置参考
 
 - 修复：别人安装后提示“`commercial-dp-planning`、`acting-system` 在指定路径下未找到”。原来这两个模块写死为作者本机路径。
