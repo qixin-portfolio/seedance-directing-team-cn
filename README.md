@@ -20,6 +20,26 @@ assets/                   多镜头分镜模板（@图片N + 每镜声音行）�
 scripts/                  校验脚本（Python 3.9+，仅标准库）
 ```
 
+## 安装
+
+```bash
+git clone https://github.com/qixin-portfolio/seedance-directing-team-cn.git ~/.claude/skills/seedance-directing-team-cn
+```
+
+## 可选依赖
+
+以下外部 Skill 不随本仓库分发；装了会增强对应环节，没装会自动回退到本 Skill 自带的参考，功能完整可用：
+
+| 模块 | 作用 | 没装时 |
+|---|---|---|
+| `commercial-dp-planning` | 摄影设计单 | 用内置摄影指导 + 摄影机与镜头选型 |
+| `acting-system` | 人物表演与声音档案 | 用内置表演指导 |
+| `lira-image-prompts` | 视觉资产提示词 | 用内置资产生产系统 |
+| `cinedance-v4` | 镜头控制区块 | 用内置输入设计与物理动作设计 |
+| `cinematic-director`（参考库） | 导演风格、广告类型参考 | 跳过 |
+
+查找位置：`~/.claude/skills/`、`~/.agents/skills/`、`~/.codex/skills/`。
+
 ## 校验
 
 ```bash
